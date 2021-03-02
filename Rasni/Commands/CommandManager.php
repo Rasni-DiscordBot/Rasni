@@ -4,6 +4,11 @@ include __DIR__ . "/HelpCommand.php";
 
 class CommandManager{
 
+    /** @var string[] */
+    const COMMANDS = [
+        Rasni::PREFIX . "help"
+    ];
+
     public static function registerCommands(){
         $commands = self::getCommands();
         $countcommand = self::getCountCommands($commands);

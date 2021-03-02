@@ -26,15 +26,26 @@ class HelpCommand{
         $prefix = $this->main::PREFIX;
 
         $discord->on(Event::MESSAGE_CREATE, function (Message $message) use($prefix, $command){
-            if ($message->content == $prefix . $command) {
-                $message->channel->sendMessage("", false, [
-                    "title" => "Avatar",
-                    "color" => 11111,
-                    "image" => [
-                        "url" => "{$message->author->getAvatarAttribute('gif', 2048)}"
-                    ]
-                ]);
+            $maincommand = $prefix . $command;
+            $length = strlen($message->content);
+            $length = $length - 2;
+
+            if (substr($message->content, 0, -$length) == $prefix){
+                if (!in_array($message->content, CommandManager::COMMANDS)){
+                    $message->channel->sendMessage("{$message->author->username}, **{$message->content}** Not found!");
+                    return false;
+                }
+                if ($message->content == $maincommand) {
+                    $message->channel->sendMessage("", false, [
+                        "title" => "Rasni",
+                        "color" => "16580705",
+                        "description" => "Commands\n\n{$prefix}help"
+                    ]);
+                    return true;
+                }
+                return true;
             }
+            return true;
         });
     }
 }
