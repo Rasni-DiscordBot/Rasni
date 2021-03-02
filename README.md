@@ -1,2 +1,3 @@
 # Rasni
-Rasni Discord Bot
+
+Rasni Discord Bot V0.1 (Alpha)
