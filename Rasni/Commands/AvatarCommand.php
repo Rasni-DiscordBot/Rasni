@@ -1,16 +1,17 @@
 <?php
 
+use Discord\Parts\Embed\Embed;
+use Discord\Discord;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use Discord\Discord;
 
-class HelpCommand{
+class AvatarCommand{
 
     /** @var Rasni */
     private $main;
 
     /**
-     * HelpCommand constructor.
+     * AvatarCommand constructor.
      * @param Rasni $main
      * @param string $command
      */
@@ -30,17 +31,27 @@ class HelpCommand{
             $maincommand = $prefix . $command;
             $length = strlen($message->content);
             $length = $length - 2;
+            $avatar = $message->author->avatar;
+            $avatar = str_replace(".jpg", ".gif", $avatar);
+
+            $img = $message->author->username;
+            $img = file_put_contents($img, file_get_contents($avatar));
+            if ($img == null){
+                $img = $message->author->avatar;
+            }else{
+                $img = $avatar;
+            }
 
             if (substr($message->content, 0, -$length) == $prefix){
-                if (!in_array($message->content, CommandManager::COMMANDS)){
-                    $message->channel->sendMessage("{$message->author->username}, **{$message->content}** Not found!");
-                    return false;
-                }
                 if ($message->content == $maincommand) {
                     $message->channel->sendMessage("", false, [
                         "title" => "Rasni",
-                        "color" => "16580705",
-                        "description" => "Commands:\n\n{$prefix}help\n{$prefix}avatar"
+                        "color" => 3066993,
+                        "description" => "{$message->author->username}'s Avatar:",
+                        "type" => Embed::TYPE_GIFV,
+                        "image" => [
+                            "url" => $img
+                        ]
                     ]);
                     return true;
                 }
