@@ -5,6 +5,8 @@ include __DIR__ . '/Commands/CommandManager.php';
 
 use Discord\Discord;
 use Discord\Parts\User\Activity;
+use Discord\Parts\User\Member;
+use Discord\WebSockets\Event;
 
 class Rasni{
 
@@ -35,6 +37,8 @@ class Rasni{
 
     public function onEvents(){
         $this->onBotActivity();
+        $this->onUserJoin();
+        $this->onUserLeave();
     }
 
     /**
@@ -49,6 +53,22 @@ class Rasni{
                 'type' => Activity::TYPE_PLAYING
             ]);
             $discord->updatePresence($activity);
+        });
+    }
+
+    public function onUserJoin(){
+        $discord = Rasni::getBot();
+
+        $discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord){
+
+        });
+    }
+
+    public function onUserLeave(){
+        $discord = Rasni::getBot();
+
+        $discord->on(Event::GUILD_MEMBER_ADD, function () {
+
         });
     }
 }
