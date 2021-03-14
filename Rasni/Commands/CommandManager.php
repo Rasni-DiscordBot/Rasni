@@ -2,13 +2,15 @@
 
 include __DIR__ . "/HelpCommand.php";
 include __DIR__ . "/AvatarCommand.php";
+include __DIR__ . "/HeadsOrTailsGameCommand.php";
 
 class CommandManager{
 
     /** @var string[] */
     const COMMANDS = [
         Rasni::PREFIX . "help",
-        Rasni::PREFIX . "avatar"
+        Rasni::PREFIX . "avatar",
+        Rasni::PREFIX . "headsortails"
     ];
 
     public static function registerCommands(){
@@ -23,13 +25,14 @@ class CommandManager{
     }
 
     /**
-     * @return HelpCommand[]
+     * @return array
      */
     public static function getCommands(){
         $discord = Rasni::getBot();
         return [
             new HelpCommand(new Rasni($discord), "help"),
-            new AvatarCommand(new Rasni($discord), "avatar")
+            new AvatarCommand(new Rasni($discord), "avatar"),
+            new HeadsOrTailsGameCommand(new Rasni($discord), "headsortails")
         ];
     }
 

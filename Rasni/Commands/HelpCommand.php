@@ -33,14 +33,14 @@ class HelpCommand{
 
             if (substr($message->content, 0, -$length) == $prefix){
                 if (!in_array($message->content, CommandManager::COMMANDS)){
-                    $message->channel->sendMessage("{$message->author->username}, **{$message->content}** Not found!");
+                    $message->channel->sendMessage("{$message->author}, **{$message->content}** Not found!");
                     return false;
                 }
                 if ($message->content == $maincommand) {
                     $message->channel->sendMessage("", false, [
                         "title" => "Rasni",
                         "color" => "16580705",
-                        "description" => "Commands:\n\n{$prefix}help\n{$prefix}avatar"
+                        "description" => "Commands:\n\n{$prefix}help\n{$prefix}avatar\n{$prefix}headsortails"
                     ]);
                     return true;
                 }

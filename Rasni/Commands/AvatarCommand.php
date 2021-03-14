@@ -32,15 +32,9 @@ class AvatarCommand{
             $length = strlen($message->content);
             $length = $length - 2;
             $avatar = $message->author->avatar;
-            $avatar = str_replace(".jpg", ".gif", $avatar);
-
-            $img = $message->author->username;
-            $img = file_put_contents($img, file_get_contents($avatar));
-            if ($img == null){
-                $img = $message->author->avatar;
-            }else{
-                $img = $avatar;
-            }
+            try {
+                $avatar = str_replace(".jpg", ".gif", $avatar);
+            }catch (Exception $e){}
 
             if (substr($message->content, 0, -$length) == $prefix){
                 if ($message->content == $maincommand) {
@@ -50,7 +44,7 @@ class AvatarCommand{
                         "description" => "{$message->author->username}'s Avatar:",
                         "type" => Embed::TYPE_GIFV,
                         "image" => [
-                            "url" => $img
+                            "url" => $avatar
                         ]
                     ]);
                     return true;
