@@ -2,13 +2,21 @@
 
 include __DIR__ . '/vendor/autoload.php';
 include __DIR__ . '/Commands/CommandManager.php';
+include __DIR__ . '/Events/EventManager.php';
 
 use Discord\Discord;
-use Discord\Parts\User\Activity;
-use Discord\Parts\User\Member;
-use Discord\WebSockets\Event;
 
 class Rasni{
+
+    /** @var string[] */
+    const HELLOMESSAGES = [
+        // Türkçe / Turkish
+        "Sa" => "Aleyküm Selam, Hoşgeldin!",
+        "Selamun Aleyküm" => "Aleyküm Selam, Hoşgeldin!",
+        // İngilizce / English
+        "Hello" => "Hi, Welcome!",
+        "Hi" => "Hi, Welcome!"
+    ];
 
     /** @var string */
     const PREFIX = "r!";
@@ -36,39 +44,6 @@ class Rasni{
     }
 
     public function onEvents(){
-        $this->onBotActivity();
-        $this->onUserJoin();
-        $this->onUserLeave();
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function onBotActivity(){
-        $discord = Rasni::getBot();
-
-        $discord->on('ready', function (Discord $discord){
-            $activity = $discord->factory(Activity::class, [
-                'name' => self::PREFIX,
-                'type' => Activity::TYPE_PLAYING
-            ]);
-            $discord->updatePresence($activity);
-        });
-    }
-
-    public function onUserJoin(){
-        $discord = Rasni::getBot();
-
-        $discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord){
-
-        });
-    }
-
-    public function onUserLeave(){
-        $discord = Rasni::getBot();
-
-        $discord->on(Event::GUILD_MEMBER_ADD, function () {
-
-        });
+        EventManager::registerEvents();
     }
 }
