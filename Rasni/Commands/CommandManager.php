@@ -3,6 +3,7 @@
 include __DIR__ . "/HelpCommand.php";
 include __DIR__ . "/AvatarCommand.php";
 include __DIR__ . "/HeadsOrTailsGameCommand.php";
+include __DIR__ . "/KissCommand.php";
 
 class CommandManager{
 
@@ -10,7 +11,8 @@ class CommandManager{
     const COMMANDS = [
         Rasni::PREFIX . "help",
         Rasni::PREFIX . "avatar",
-        Rasni::PREFIX . "headsortails"
+        Rasni::PREFIX . "headsortails",
+        Rasni::PREFIX . "kiss"
     ];
 
     public static function registerCommands(){
@@ -32,7 +34,8 @@ class CommandManager{
         return [
             new HelpCommand(new Rasni($discord), "help"),
             new AvatarCommand(new Rasni($discord), "avatar"),
-            new HeadsOrTailsGameCommand(new Rasni($discord), "headsortails")
+            new HeadsOrTailsGameCommand(new Rasni($discord), "headsortails"),
+            new KissCommand(new Rasni($discord), "kiss")
         ];
     }
 
